@@ -1,0 +1,39 @@
+.query-nav-header {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid grey;
+  background-color: rgb(238, 238, 238);
+}
+
+.query-name {
+  border-bottom: 1px solid grey;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.query-name:hover {
+  background-color: rgb(221, 236, 249);
+}
+
+.selected-query,
+.selected-query:hover {
+  background-color: rgb(170, 211, 246);
+}
+
+.closeIcon {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 18px;
+}
+
+.closeIcon:hover,
+.closeIcon:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -1,0 +1,21 @@
+.query-space-wrapper {
+  flex: 1;
+}
+
+.query-space-header {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  border-bottom: 1px solid grey;
+  background-color: rgb(238, 238, 238);
+}
+
+.query-space-text {
+  width: 97%;
+  margin: 12px;
+}
+
+.query-actions {
+  margin: 0 16px 12px;
+  text-align: right;
+}

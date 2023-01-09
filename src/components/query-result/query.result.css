@@ -1,0 +1,13 @@
+.query-result-wrapper {
+  flex: 2;
+}
+
+.query-result-header {
+  padding: 12px;
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  border-block: 1px solid grey;
+  background-color: rgb(238, 238, 238);
+}
