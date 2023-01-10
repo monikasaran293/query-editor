@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { QueryContext } from "../../context/query.context"
+import { getInitialQuery } from "../../pages/home.util"
 import './query.space.css'
 
 const QuerySpace = () => {
@@ -7,7 +8,7 @@ const QuerySpace = () => {
   const [queryText, setQueryText] = useState(query.name)
 
   useEffect(() => {
-    setQueryText(query.name)
+    setQueryText(query?.name || '')
   }, [query.name])
 
   const onQueryRun = () => {
@@ -19,7 +20,11 @@ const QuerySpace = () => {
   }
 
   const onQueryChange = (e) => {
-    const updatedQuery = { ...query, name: queryText }
+    const updatedQuery = {
+      ...getInitialQuery(),
+      ...query,
+      name: queryText
+    }
     setQueryData({
       query: updatedQuery,
       queries: { ...queries, [updatedQuery.id]: { ...updatedQuery } }
@@ -35,7 +40,11 @@ const QuerySpace = () => {
       onBlur={onQueryChange}
       onChange={(e) => setQueryText(e.target.value)} />
     <div className="query-actions">
-      <button onClick={onQueryRun}>Run</button>
+      <button
+        disabled={!query?.name}
+        onClick={onQueryRun}>
+        Run
+      </button>
     </div>
   </div>
 }

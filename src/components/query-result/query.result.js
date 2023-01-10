@@ -7,9 +7,10 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import './query.result.css'
 
 const QueryResult = () => {
-  const { queryData: { query } } = useContext(QueryContext)
+  const { queryData } = useContext(QueryContext)
+  const { query } = queryData
 
-  const rowData = useMemo(() => query.data, [query.data])
+  const rowData = useMemo(() => query?.data || [], [query.data])
 
   const columnDefs = useMemo(() => {
     const row = rowData?.[0] || []
@@ -29,7 +30,7 @@ const QueryResult = () => {
 
   return <div className="query-result-wrapper">
     <header className='query-result-header'>
-      <div>{query.table.toUpperCase()}</div>
+      <div>{query?.table?.toUpperCase() || 'RESULT'}</div>
       {
         !!rowData.length &&
         <a

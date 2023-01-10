@@ -12,6 +12,20 @@ const QueryNav = () => {
     setQueryData({ queries: { ...queries, [newQuery.id]: { ...newQuery } } })
   }
 
+  const onQueryRemove = (e, id) => {
+    e.stopPropagation()
+    const updatedQueries = { ...queries }
+    delete updatedQueries[id]
+    let updatedQuery = query
+    if (id === query.id) {
+      updatedQuery = updatedQueries.length ? Object.values(updatedQueries)[0] : {}
+    }
+    setQueryData({
+      query: { ...updatedQuery },
+      queries: { ...updatedQueries }
+    })
+  }
+
   const onQueryClick = (selectQuery) => {
     setQueryData({ query: selectQuery })
   }
@@ -31,7 +45,10 @@ const QueryNav = () => {
           className={className}
           onClick={() => onQueryClick(que)}>
           {name}
-          <span className="closeIcon">&times;</span>
+          <span
+            onClick={(e) => onQueryRemove(e, id)}
+            className="closeIcon">&times;
+          </span>
         </div>
       })
     }
