@@ -1,19 +1,19 @@
 import { useContext } from "react"
-import { QueryContext } from "../../pages/home"
+import { QueryContext } from "../../context/query.context"
 import { getInitialQuery } from "../../pages/home.util"
 import './query.nav.css'
 
 
 const QueryNav = () => {
-  const { query, setQuery, queries, setQueries } = useContext(QueryContext)
+  const { queryData: { query, queries }, setQueryData } = useContext(QueryContext)
 
   const onAddQuery = () => {
     const newQuery = getInitialQuery()
-    setQueries({ ...queries, [newQuery.id]: { ...newQuery } })
+    setQueryData({ queries: { ...queries, [newQuery.id]: { ...newQuery } } })
   }
 
   const onQueryClick = (selectQuery) => {
-    setQuery(selectQuery)
+    setQueryData({ query: selectQuery })
   }
 
   return <div className="query-nav-wrapper">

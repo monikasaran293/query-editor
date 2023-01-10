@@ -1,21 +1,18 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { AgGridReact } from 'ag-grid-react';
-import './query.result.css'
+import { QueryContext } from "../../context/query.context"
 
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
-import { QueryContext } from '../../pages/home';
+import './query.result.css'
 
 const QueryResult = () => {
-  const { query } = useContext(QueryContext)
-  const [queryResult, setQueryResult] = useState([])
+  const { queryData: { query } } = useContext(QueryContext)
 
-  useEffect(() => {
-    setQueryResult(query.data)
-  }, [query])
+  const rowData = useMemo(() => query.data, [query.data])
 
   const columnDefs = useMemo(() => {
-    const row = queryResult?.[0] || []
+    const row = rowData?.[0] || []
     return Object.keys(row)
       .map(key => {
         const columnDef = { field: key, resizable: true }
@@ -28,15 +25,15 @@ const QueryResult = () => {
         }
         return columnDef
       })
-  }, [queryResult])
+  }, [rowData])
 
   return <div className="query-result-wrapper">
     <header className='query-result-header'>
       <div>{query.table.toUpperCase()}</div>
       {
-        !!queryResult.length &&
+        !!rowData.length &&
         <a
-          href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(queryResult))}`}
+          href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(rowData))}`}
           download={`${query.table}.json`}>
           Export
         </a>
@@ -45,7 +42,7 @@ const QueryResult = () => {
     </header>
     <div className="ag-theme-alpine" style={{ height: '80%', width: '100%' }}>
       <AgGridReact
-        rowData={queryResult}
+        rowData={rowData}
         columnDefs={columnDefs}>
       </AgGridReact>
     </div>

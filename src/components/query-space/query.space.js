@@ -1,32 +1,39 @@
-import { useContext } from "react"
-import { QueryContext } from "../../pages/home"
+import { useContext, useEffect, useState } from "react"
+import { QueryContext } from "../../context/query.context"
 import './query.space.css'
 
 const QuerySpace = () => {
-  const { query, setQuery, queries, setQueries } = useContext(QueryContext)
+  const { queryData: { query, queries }, setQueryData } = useContext(QueryContext)
+  const [queryText, setQueryText] = useState(query.name)
+
+  useEffect(() => {
+    setQueryText(query.name)
+  }, [query.name])
 
   const onQueryRun = () => {
     fetch(`data/${query.table}.json`)
       .then((res) => res.json())
       .then((data) => {
-        setQuery({ ...query, data })
+        setQueryData({ query: { ...query, data } })
       })
   }
 
   const onQueryChange = (e) => {
-    const queryText = e.target.value
     const updatedQuery = { ...query, name: queryText }
-    setQuery(updatedQuery)
-    setQueries({ ...queries, [updatedQuery.id]: { ...updatedQuery } })
+    setQueryData({
+      query: updatedQuery,
+      queries: { ...queries, [updatedQuery.id]: { ...updatedQuery } }
+    })
   }
 
   return <div className="query-space-wrapper">
     <header className="query-space-header">Input Query</header>
     <textarea
       className="query-space-text"
-      defaultValue={query.name}
+      value={queryText}
       rows={15}
-      onBlur={onQueryChange} />
+      onBlur={onQueryChange}
+      onChange={(e) => setQueryText(e.target.value)} />
     <div className="query-actions">
       <button onClick={onQueryRun}>Run</button>
     </div>
