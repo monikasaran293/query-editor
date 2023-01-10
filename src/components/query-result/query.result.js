@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useState } from 'react'
+import { useContext, useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react';
 import { QueryContext } from "../../context/query.context"
 

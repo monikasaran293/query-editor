@@ -1,4 +1,4 @@
-import { createContext, useMemo, useReducer, useState } from "react";
+import { createContext, useMemo, useReducer } from "react";
 import { getInitialQuery } from "../pages/home.util";
 
 export const QueryContext = createContext()
